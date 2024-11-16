@@ -128,6 +128,7 @@ Distributed under the **MIT** License. See [`LICENSE`](LICENSE) for more informa
 [sail]: https://laravel.com/docs/11.x/sail
 [shield]: https://github.com/bezhanSalleh/filament-shield
 [log-viewer]: https://log-viewer.opcodes.io
+
 [clockwork]: https://underground.works/clockwork
 
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2024.svg?style=for-the-badge
