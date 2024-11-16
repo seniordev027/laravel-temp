@@ -2,8 +2,8 @@
 
 namespace App\Providers\Filament;
 
+use App\Enums\UserRole;
 use App\Filament\Pages\Backups;
-use App\Filament\Pages\EditProfile;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -41,7 +41,6 @@ class AdminPanelProvider extends PanelProvider
             // Navigation
             ->sidebarCollapsibleOnDesktop()
             ->userMenuItems([
-                'profile' => MenuItem::make()->url(fn (): string => EditProfile::getUrl()),
                 'logout' => MenuItem::make()->label('Log Out'),
             ])
             ->navigationItems([
@@ -52,6 +51,7 @@ class AdminPanelProvider extends PanelProvider
                     ->sort(2),
                 NavigationItem::make('Log Viewer')
                     ->url(fn (): string => route('log-viewer.index'), shouldOpenInNewTab: true)
+                    ->visible(fn (): bool => auth()->user()?->hasRole(UserRole::ADMIN))
                     ->icon('heroicon-o-document-text')
                     ->group('Settings')
                     ->sort(4),
@@ -68,6 +68,13 @@ class AdminPanelProvider extends PanelProvider
                 ->usingPolingInterval('10s'))
             ->plugins([
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
+                \Jeffgreco13\FilamentBreezy\BreezyCore::make()
+                    ->myProfile(
+                        shouldRegisterUserMenu: true,
+                        hasAvatars: true,
+                        slug: 'profile',
+                    )
+                    ->enableTwoFactorAuthentication(),
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([

@@ -24,6 +24,7 @@ The Laravel template project comes with the following features:
 - [Laravel Sail][sail] (docker)
 - [Laravel Backup][backup] (from spatie)
 - [Log Viewer][log-viewer]
+- [Clockwork][clockwork] (debugging)
 - [Filament PHP][filament] (admin dashboard)
 - [Filament Shield][shield] (roles and permissions)
 - [Devcontainer][devcontainer] for Visual Studio Code
@@ -43,6 +44,9 @@ By default there are 3 types of roles:
 ## Getting started
 
 Follow the steps below to get started with the Laravel template project.
+
+> [!NOTE]
+> Make sure you have installed [Laravel Sail][sail] globally on your system.
 
 ### Setting up development environment
 
@@ -75,14 +79,15 @@ DB_PASSWORD=password
 name: 'template'
 ```
 
-6. Install the composer dependencies and generate a new application key:
-```bash
-composer install && php artisan key:generate
-```
-
-7. Start the development server:
+6. Start the development server:
 ```bash
 ./vendor/bin/sail up -d
+```
+
+7. Install the composer dependencies and generate a new application key:
+```bash
+./vendor/bin/sail composer install
+./vendor/bin/sail php artisan key:generate
 ```
 
 8. Run the database migrations and seed the database:
@@ -90,9 +95,10 @@ composer install && php artisan key:generate
 ./vendor/bin/sail php artisan migrate --seed
 ```
 
-9. Build the frontend assets:
+9. Build the frontend assets and watch for changes:
 ```bash
-npm install && npm run dev
+./vendor/bin/sail npm install
+./vendor/bin/sail npm run dev
 ```
 
 ### Create admin user
@@ -100,7 +106,7 @@ npm install && npm run dev
 To create an admin user for the Filament dashboard, run the following command:
 
 ```bash
-php artisan make:filament-user
+./vendor/bin/sail php artisan make:filament-user
 ```
 
 ### Testing with Pest
@@ -122,6 +128,8 @@ Distributed under the **MIT** License. See [`LICENSE`](LICENSE) for more informa
 [sail]: https://laravel.com/docs/11.x/sail
 [shield]: https://github.com/bezhanSalleh/filament-shield
 [log-viewer]: https://log-viewer.opcodes.io
+
+[clockwork]: https://underground.works/clockwork
 
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2024.svg?style=for-the-badge
 [contributors-shield]: https://img.shields.io/github/contributors/klaasnicolaas/laravel-template.svg?style=for-the-badge
